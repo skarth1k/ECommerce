@@ -12,7 +12,8 @@ namespace ECommerce.Tests
         [Test]
         public void CartTest()
         {
-            Assert.Pass();
+            Cart cart = new Cart();
+            cart.Checkout();
         }
     }
 }
