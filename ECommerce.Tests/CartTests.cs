@@ -10,10 +10,31 @@ namespace ECommerce.Tests
         }
 
         [Test]
-        public void CartTest()
+        public void AddItemTest()
         {
+            var productItems = ProductHelper.GetProducts();
             Cart cart = new Cart();
-            cart.Checkout();
+            foreach (var product in productItems)
+            {
+                cart.AddItem(product, quantity);
+            }
+
+            Assert.AreEqual(5, cart.TotalItems);
+        }
+
+        [Test]
+        public void RemoveItemTest()
+        {
+            var productItems = ProductHelper.GetProducts();
+            Cart cart = new Cart();
+            foreach (var product in productItems)
+            {
+                cart.AddItem(product, quantity);
+            }
+
+            cart.RemoveItem(product, quantity);
+
+            Assert.AreEqual(3, cart.TotalItems);
         }
     }
 }
