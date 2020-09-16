@@ -47,12 +47,22 @@ namespace ECommerce.Provider
 
         public decimal ApplyPromotions(Context context)
         {
-            throw new NotImplementedException();
+
+            return 0.0m;
         }
 
         public bool IsApplicable(Context context)
         {
-            throw new NotImplementedException();
+            var cartItem = context.CartItems[0];
+            var promotionalProduct = individualPromotions.FirstOrDefault(ip => ip.Product == cartItem.Item);
+            if (promotionalProduct != null)
+            {
+                if (cartItem.Quantity >= promotionalProduct.Quantity)
+                    return true;
+                return false;
+            }
+
+            return false;
         }
 
         public void Remove(Promotion promotion)

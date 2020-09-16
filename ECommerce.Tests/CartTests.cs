@@ -138,5 +138,26 @@ namespace ECommerce.Tests
             Assert.AreEqual(160, totalPrice);
             Assert.AreEqual(2, cart.TotalProducts);
         }
+
+        [Test]
+        public void Cart_IndividualPromotion_Test()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.A), 5);
+
+            var rules = new List<IPromotionRule>
+            {
+                new IndividualPromotionProcessor()                
+            };
+
+            var totalPrice = cart.CalculateTotal();
+            Assert.AreEqual(250, totalPrice);
+            Assert.AreEqual(1, cart.TotalProducts);
+
+            cart.Checkout(new PromotionProcessor(rules));
+
+
+
+        }
     }
 }

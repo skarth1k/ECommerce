@@ -13,7 +13,16 @@ namespace ECommerce.Provider
 
         public void ApplyPromotions(Context context)
         {
-            throw new System.NotImplementedException();
+            if (!context.IsPromotionApplied)
+            {
+                foreach (var rule in promotionRules)
+                {
+                    if (rule.IsApplicable(context))
+                    {
+                        rule.ApplyPromotions(context);
+                    }
+                }
+            }
         }
     }
 }
