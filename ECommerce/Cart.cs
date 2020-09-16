@@ -1,4 +1,5 @@
 ﻿using ECommerce.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -48,5 +49,9 @@ namespace ECommerce
             return cartItems.ToString();
         }
 
+        public bool Checkout(IPromotionProcessor promotionProcessor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

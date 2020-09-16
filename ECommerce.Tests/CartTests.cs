@@ -31,7 +31,7 @@ namespace ECommerce.Tests
         [Test]
         public void CreateIndividualPromotion_InvalidTest()
         {
-            IPromotion createPromotion = new IndividualPromotionProcessor();           
+            IPromotion createPromotion = new IndividualPromotionProcessor();
 
             Assert.Throws<InvalidOperationException>(() => createPromotion.Add(new IndividualPromotion
             {
@@ -61,7 +61,7 @@ namespace ECommerce.Tests
         [Test]
         public void CreateComboPromotion_InvalidTest()
         {
-            IPromotion createPromotion = new ComboPromotionProcessor();           
+            IPromotion createPromotion = new ComboPromotionProcessor();
 
             Assert.Throws<InvalidOperationException>(() => createPromotion.Add(new ComboPromotion
             {
@@ -86,9 +86,7 @@ namespace ECommerce.Tests
                 new ComboPromotionProcessor()
             };
 
-            var promotionProcessor = new PromotionProcessor(rules);
-
-            promotionProcessor.ApplyPromotion(context);
+            bool ischeckedOut = cart.Checkout(new PromotionProcessor(rules));
         }
     }
 }
