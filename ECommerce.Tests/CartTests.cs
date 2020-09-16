@@ -32,7 +32,8 @@ namespace ECommerce.Tests
                 cart.AddItem(product, quantity);
             }
 
-            cart.RemoveItem(product, quantity);
+            var removeProduct = new Product();
+            cart.RemoveItem(removeProduct, 2);
 
             Assert.AreEqual(3, cart.TotalItems);
         }
