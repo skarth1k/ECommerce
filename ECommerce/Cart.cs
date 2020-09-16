@@ -9,6 +9,14 @@ namespace ECommerce
     {
         private List<ProductItem> productItems;
         private decimal totalPrice = 0.0m;
+
+        public int TotalProducts 
+        { 
+            get
+            {
+                return productItems.Count;
+            }
+        }
         public Cart()
         {
             productItems = new List<ProductItem>();

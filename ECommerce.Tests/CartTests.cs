@@ -14,7 +14,7 @@ namespace ECommerce.Tests
         }
 
         [Test]
-        public void CreateIndividualPromotionTest()
+        public void Create_IndividualPromotion_Test()
         {
             IPromotion createPromotion = new IndividualPromotionProcessor();
             createPromotion.Add(new IndividualPromotion
@@ -29,7 +29,7 @@ namespace ECommerce.Tests
         }
 
         [Test]
-        public void CreateIndividualPromotion_InvalidTest()
+        public void Create_IndividualPromotion_InvalidTest()
         {
             IPromotion createPromotion = new IndividualPromotionProcessor();
 
@@ -44,7 +44,7 @@ namespace ECommerce.Tests
 
 
         [Test]
-        public void CreateComboPromotionTest()
+        public void Create_ComboPromotion_Test()
         {
             IPromotion createPromotion = new ComboPromotionProcessor();
             createPromotion.Add(new ComboPromotion
@@ -59,7 +59,7 @@ namespace ECommerce.Tests
         }
 
         [Test]
-        public void CreateComboPromotion_InvalidTest()
+        public void Create_ComboPromotion_InvalidTest()
         {
             IPromotion createPromotion = new ComboPromotionProcessor();
 
@@ -73,18 +73,19 @@ namespace ECommerce.Tests
         }
 
         [Test]
-        public void Cart3ItemsTest()
+        public void Cart_3Items_Test()
         {
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 1);
             cart.AddItem(ProductHelper.Get(Constants.B), 1);
             cart.AddItem(ProductHelper.Get(Constants.C), 1);
             var totalPrice = cart.CalculateTotal();
-            Assert.AreEqual(100, totalPrice);          
+            Assert.AreEqual(100, totalPrice);
+            Assert.AreEqual(3, cart.TotalProducts);
         }
 
         [Test]
-        public void Cart4ItemsTest()
+        public void Cart_4Items_Test()
         {
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 1);
@@ -93,44 +94,49 @@ namespace ECommerce.Tests
             cart.AddItem(ProductHelper.Get(Constants.D), 1);
             var totalPrice = cart.CalculateTotal();
             Assert.AreEqual(115, totalPrice);
+            Assert.AreEqual(4, cart.TotalProducts);
         }
 
         [Test]
-        public void Cart2ItemsTest()
+        public void Cart_2Items_Test()
         {
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 1);
             cart.AddItem(ProductHelper.Get(Constants.B), 1);            
             var totalPrice = cart.CalculateTotal();
             Assert.AreEqual(80, totalPrice);
+            Assert.AreEqual(2, cart.TotalProducts);
         }
 
         [Test]
-        public void Cart1ItemTest()
+        public void Cart_1Item_Test()
         {
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 1);            
             var totalPrice = cart.CalculateTotal();
             Assert.AreEqual(50, totalPrice);
+            Assert.AreEqual(1, cart.TotalProducts);
         }
 
         [Test]
-        public void Cart1Item2QuantityTest()
+        public void Cart_1Item_2Quantity_Test()
         {
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 2);
             var totalPrice = cart.CalculateTotal();
             Assert.AreEqual(100, totalPrice);
+            Assert.AreEqual(1, cart.TotalProducts);
         }
 
         [Test]
-        public void Cart2Item2QuantityTest()
+        public void Cart_2Item_2Quantity_Test()
         {
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 2);
             cart.AddItem(ProductHelper.Get(Constants.B), 2);
             var totalPrice = cart.CalculateTotal();
             Assert.AreEqual(160, totalPrice);
+            Assert.AreEqual(2, cart.TotalProducts);
         }
     }
 }
