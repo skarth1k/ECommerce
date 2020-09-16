@@ -13,18 +13,6 @@ namespace ECommerce.Tests
         {
         }
 
-
-
-        [Test]
-        public void CartPromotionTest()
-        {
-            var productItems = Cart.GetItems();
-            var rules = new List<IPromotionRule>();
-            var promotionProcessor = new PromotionProcessor(rules, productItems);
-            promotionProcessor.ApplyPromotion();
-        }
-
-
         [Test]
         public void CreateIndividualPromotionTest()
         {
@@ -82,6 +70,23 @@ namespace ECommerce.Tests
                 Type = PromotionType.Individual,
                 Products = ProductHelper.GetProducts(Constants.A, Constants.B, Constants.C)
             }));
+        }
+
+        [Test]
+        public void CartPromotionTest()
+        {
+            var cart = new Cart();
+            var productItems = cart.GetCartItems();
+
+            var rules = new List<IPromotionRule>
+            {
+                new IndividualPromotionProcessor(),
+                new ComboPromotionProcessor()
+            };
+
+            var promotionProcessor = new PromotionProcessor(rules, productItems);
+
+            promotionProcessor.ApplyPromotion();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ECommerce.Contracts;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ECommerce
@@ -14,12 +15,18 @@ namespace ECommerce
 
         public void AddItem(Product product, int quantity)
         {
-
+           
         }
 
         public void RemoveItem(Product product, int quantity)
         {
 
+        }
+
+
+        public List<ProductItem> GetCartItems() 
+        {
+            return productItems;
         }
 
         public void CalculateTotal()
