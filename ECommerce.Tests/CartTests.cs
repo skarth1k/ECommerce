@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace ECommerce.Tests
 {
@@ -37,5 +38,17 @@ namespace ECommerce.Tests
 
             Assert.AreEqual(3, cart.TotalItems);
         }
+
+        [Test]
+        public void PromotionTest()
+        {
+            var productItems = Cart.GetItems();
+            var rules = new List<IPromotionRule>();
+            var promotionProcessor = new PromotionProcessor(rules, productItems);
+            promotionProcessor.ApplyPromotion();
+
+
+        }
+
     }
 }
