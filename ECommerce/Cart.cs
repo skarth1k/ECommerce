@@ -22,17 +22,14 @@ namespace ECommerce
         public void RemoveItem(Product product, int quantity)
         {
 
-        }
+        }        
 
-
-        public List<ProductItem> GetCartItems() 
+        private void CalculateTotal()
         {
-            return productItems;
-        }
-
-        public void CalculateTotal()
-        {
-
+            foreach (var product in productItems)
+            {
+                totalPrice = product.Quantity * product.Item.Price;
+            }            
         }
 
         public override string ToString()
@@ -51,7 +48,16 @@ namespace ECommerce
 
         public bool Checkout(IPromotionProcessor promotionProcessor)
         {
-            throw new NotImplementedException();
+            try
+            {
+                promotionProcessor.ApplyPromotions(new Context(productItems));
+                return true;
+            }
+            catch (Exception)
+            {
+                //Log the exception
+                return false;
+            }
         }
     }
 }

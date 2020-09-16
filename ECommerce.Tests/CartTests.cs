@@ -76,10 +76,6 @@ namespace ECommerce.Tests
         public void CartPromotionTest()
         {
             var cart = new Cart();
-            var cartItems = cart.GetCartItems();
-
-            var context = new Context(cartItems);
-
             var rules = new List<IPromotionRule>
             {
                 new IndividualPromotionProcessor(),
