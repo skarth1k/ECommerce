@@ -1,5 +1,4 @@
 ﻿using ECommerce.Contracts;
-using Microsoft.VisualBasic;
 using System.Collections.Generic;
 
 namespace ECommerce.Provider
@@ -32,7 +31,6 @@ namespace ECommerce.Provider
                     Quantity = 1,
                     Products =  ProductHelper.GetProducts(Constants.C, Constants.D),
                     Type = PromotionType.Combo
-
                 }
             };
         }

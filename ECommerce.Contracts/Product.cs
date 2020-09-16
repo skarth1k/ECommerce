@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ECommerce.Contracts
+﻿namespace ECommerce.Contracts
 {
     public class Product
     {
