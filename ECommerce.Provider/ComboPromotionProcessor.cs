@@ -37,6 +37,16 @@ namespace ECommerce.Provider
             }
         }
 
+        public decimal ApplyPromotions(Context context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsApplicable(Context context)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(Promotion promotion)
         {
             throw new NotImplementedException();
