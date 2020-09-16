@@ -76,7 +76,9 @@ namespace ECommerce.Tests
         public void CartPromotionTest()
         {
             var cart = new Cart();
-            var productItems = cart.GetCartItems();
+            var cartItems = cart.GetCartItems();
+
+            var context = new Context(cartItems);
 
             var rules = new List<IPromotionRule>
             {
@@ -84,9 +86,9 @@ namespace ECommerce.Tests
                 new ComboPromotionProcessor()
             };
 
-            var promotionProcessor = new PromotionProcessor(rules, productItems);
+            var promotionProcessor = new PromotionProcessor(rules);
 
-            promotionProcessor.ApplyPromotion();
+            promotionProcessor.ApplyPromotion(context);
         }
     }
 }
