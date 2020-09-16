@@ -73,16 +73,64 @@ namespace ECommerce.Tests
         }
 
         [Test]
-        public void CartPromotionTest()
+        public void Cart3ItemsTest()
         {
             var cart = new Cart();
-            var rules = new List<IPromotionRule>
-            {
-                new IndividualPromotionProcessor(),
-                new ComboPromotionProcessor()
-            };
+            cart.AddItem(ProductHelper.Get(Constants.A), 1);
+            cart.AddItem(ProductHelper.Get(Constants.B), 1);
+            cart.AddItem(ProductHelper.Get(Constants.C), 1);
+            var totalPrice = cart.CalculateTotal();
+            Assert.AreEqual(100, totalPrice);          
+        }
 
-            bool ischeckedOut = cart.Checkout(new PromotionProcessor(rules));
+        [Test]
+        public void Cart4ItemsTest()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.A), 1);
+            cart.AddItem(ProductHelper.Get(Constants.B), 1);
+            cart.AddItem(ProductHelper.Get(Constants.C), 1);
+            cart.AddItem(ProductHelper.Get(Constants.D), 1);
+            var totalPrice = cart.CalculateTotal();
+            Assert.AreEqual(115, totalPrice);
+        }
+
+        [Test]
+        public void Cart2ItemsTest()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.A), 1);
+            cart.AddItem(ProductHelper.Get(Constants.B), 1);            
+            var totalPrice = cart.CalculateTotal();
+            Assert.AreEqual(80, totalPrice);
+        }
+
+        [Test]
+        public void Cart1ItemTest()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.A), 1);            
+            var totalPrice = cart.CalculateTotal();
+            Assert.AreEqual(50, totalPrice);
+        }
+
+        [Test]
+        public void Cart1Item2QuantityTest()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.A), 2);
+            var totalPrice = cart.CalculateTotal();
+            Assert.AreEqual(100, totalPrice);
+        }
+
+        [Test]
+        public void Cart2Item2QuantityTest()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.A), 2);
+            cart.AddItem(ProductHelper.Get(Constants.B), 2);
+            var totalPrice = cart.CalculateTotal();
+            Assert.AreEqual(160, totalPrice);
         }
     }
 }

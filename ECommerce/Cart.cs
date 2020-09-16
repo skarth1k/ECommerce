@@ -16,20 +16,22 @@ namespace ECommerce
 
         public void AddItem(Product product, int quantity)
         {
-           
+            productItems.Add(new ProductItem { Item = product, Quantity = quantity });
         }
 
         public void RemoveItem(Product product, int quantity)
         {
-
+            productItems.Remove(new ProductItem { Item = product, Quantity = quantity });
         }        
 
-        private void CalculateTotal()
+        public decimal CalculateTotal()
         {
             foreach (var product in productItems)
             {
-                totalPrice = product.Quantity * product.Item.Price;
-            }            
+                totalPrice += product.Quantity * product.Item.Price;
+            }
+
+            return totalPrice;
         }
 
         public override string ToString()
