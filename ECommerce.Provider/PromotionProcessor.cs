@@ -13,13 +13,14 @@ namespace ECommerce.Provider
 
         public decimal ApplyPromotions(Context context)
         {
-            if (!context.IsPromotionApplied)
+            foreach (var rule in promotionRules)
             {
-                foreach (var rule in promotionRules)
+                if (rule.IsApplicable(context))
                 {
-                    if (rule.IsApplicable(context))
+                    if (!context.IsPromotionApplied)
                     {
-                        return rule.ApplyPromotions(context);
+                        var priceAfterDiscount = rule.ApplyPromotions(context);
+                        return priceAfterDiscount;
                     }
                 }
             }

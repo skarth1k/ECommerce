@@ -157,5 +157,45 @@ namespace ECommerce.Tests
             var discountedPrice = cart.Checkout(new PromotionProcessor(rules));
             Assert.AreEqual(230, discountedPrice);
         }
+
+        [Test]
+        public void Cart_IndividualPromotion_2Items_Test()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.A), 5);
+            cart.AddItem(ProductHelper.Get(Constants.B), 3);
+
+            var rules = new List<IPromotionRule>
+            {
+                new IndividualPromotionProcessor()
+            };
+
+            var totalPrice = cart.CartTotalPrice();
+            Assert.AreEqual(340, totalPrice);
+            Assert.AreEqual(2, cart.TotalProducts);
+
+            var discountedPrice = cart.Checkout(new PromotionProcessor(rules));
+            Assert.AreEqual(305, discountedPrice);
+        }
+
+        [Test]
+        public void Cart_IndividualPromotion_2Items_Quantity_Different_Test()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.A), 4);
+            cart.AddItem(ProductHelper.Get(Constants.B), 2);
+
+            var rules = new List<IPromotionRule>
+            {
+                new IndividualPromotionProcessor()
+            };
+
+            var totalPrice = cart.CartTotalPrice();
+            Assert.AreEqual(260, totalPrice);
+            Assert.AreEqual(2, cart.TotalProducts);
+
+            var discountedPrice = cart.Checkout(new PromotionProcessor(rules));
+            Assert.AreEqual(225, discountedPrice);
+        }
     }
 }

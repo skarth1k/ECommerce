@@ -47,31 +47,39 @@ namespace ECommerce.Provider
 
         public decimal ApplyPromotions(Context context)
         {
+            decimal discountPrice = 0.0M, normalPricing = 0.0M, priceAfterDiscounts = 0.0M;
 
-            var cartItem = context.CartItems[0];
-            var promotionalProduct = individualPromotions.FirstOrDefault(ip => ip.Product == cartItem.Item);
-            if (promotionalProduct != null)
+            for (int i = 0; i < context.CartItems.Count; i++)
             {
-                var quantity = cartItem.Quantity;
+                var cartItem = context.CartItems[i];
+                var promotionalProduct = GetPromotionalProduct(cartItem);
 
-                var discountPrice = cartItem.Quantity / promotionalProduct.Quantity;
-                var normalPricing = cartItem.Quantity % promotionalProduct.Quantity;
+                if (promotionalProduct != null)
+                {
+                    var cartQuantity = cartItem.Quantity;
 
-                return (discountPrice * promotionalProduct.Price) + (normalPricing * cartItem.Item.Price);
+                    discountPrice = cartQuantity / promotionalProduct.Quantity;
+                    normalPricing = cartQuantity % promotionalProduct.Quantity;
+
+                    priceAfterDiscounts += (discountPrice * promotionalProduct.Price) + (normalPricing * cartItem.Item.Price);
+                }
             }
 
-            return 0.0m;
+            return priceAfterDiscounts;
         }
 
         public bool IsApplicable(Context context)
         {
-            var cartItem = context.CartItems[0];
-            var promotionalProduct = individualPromotions.FirstOrDefault(ip => ip.Product == cartItem.Item);
-            if (promotionalProduct != null)
+            for (int i = 0; i < context.CartItems.Count; i++)
             {
-                if (cartItem.Quantity >= promotionalProduct.Quantity)
-                    return true;
-                return false;
+                var cartItem = context.CartItems[i];
+                var promotionalProduct = GetPromotionalProduct(cartItem);
+                if (promotionalProduct != null)
+                {
+                    if (cartItem.Quantity >= promotionalProduct.Quantity)
+                        return true;
+                    return false;
+                }
             }
 
             return false;
@@ -100,6 +108,11 @@ namespace ECommerce.Provider
             return individualPromotions
                 .Where(i => i.Product == promotion.Product && i.Quantity == promotion.Quantity)
                 .FirstOrDefault() == null;
+        }
+
+        private IndividualPromotion GetPromotionalProduct(ProductItem productItem)
+        {
+            return individualPromotions.FirstOrDefault(p => p.Product == productItem.Item);
         }
     }
 }
