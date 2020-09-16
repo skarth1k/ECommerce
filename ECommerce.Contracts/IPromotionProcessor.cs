@@ -2,6 +2,6 @@
 {
     public interface IPromotionProcessor
     {
-        void ApplyPromotions(Context context);
+        decimal ApplyPromotions(Context context);
     }
 }

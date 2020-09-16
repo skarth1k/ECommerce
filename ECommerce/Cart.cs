@@ -10,8 +10,8 @@ namespace ECommerce
         private List<ProductItem> productItems;
         private decimal totalPrice = 0.0m;
 
-        public int TotalProducts 
-        { 
+        public int TotalProducts
+        {
             get
             {
                 return productItems.Count;
@@ -30,9 +30,9 @@ namespace ECommerce
         public void RemoveItem(Product product, int quantity)
         {
             productItems.Remove(new ProductItem { Item = product, Quantity = quantity });
-        }        
+        }
 
-        public decimal CalculateTotal()
+        public decimal CartTotalPrice()
         {
             foreach (var product in productItems)
             {
@@ -56,17 +56,16 @@ namespace ECommerce
             return cartItems.ToString();
         }
 
-        public bool Checkout(IPromotionProcessor promotionProcessor)
+        public decimal Checkout(IPromotionProcessor promotionProcessor)
         {
             try
             {
-                promotionProcessor.ApplyPromotions(new Context(productItems));
-                return true;
+                return promotionProcessor.ApplyPromotions(new Context(productItems));                
             }
             catch (Exception)
             {
                 //Log the exception
-                return false;
+                return 0.0m;
             }
         }
     }

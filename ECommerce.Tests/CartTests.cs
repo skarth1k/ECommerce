@@ -79,7 +79,7 @@ namespace ECommerce.Tests
             cart.AddItem(ProductHelper.Get(Constants.A), 1);
             cart.AddItem(ProductHelper.Get(Constants.B), 1);
             cart.AddItem(ProductHelper.Get(Constants.C), 1);
-            var totalPrice = cart.CalculateTotal();
+            var totalPrice = cart.CartTotalPrice();
             Assert.AreEqual(100, totalPrice);
             Assert.AreEqual(3, cart.TotalProducts);
         }
@@ -92,7 +92,7 @@ namespace ECommerce.Tests
             cart.AddItem(ProductHelper.Get(Constants.B), 1);
             cart.AddItem(ProductHelper.Get(Constants.C), 1);
             cart.AddItem(ProductHelper.Get(Constants.D), 1);
-            var totalPrice = cart.CalculateTotal();
+            var totalPrice = cart.CartTotalPrice();
             Assert.AreEqual(115, totalPrice);
             Assert.AreEqual(4, cart.TotalProducts);
         }
@@ -102,8 +102,8 @@ namespace ECommerce.Tests
         {
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 1);
-            cart.AddItem(ProductHelper.Get(Constants.B), 1);            
-            var totalPrice = cart.CalculateTotal();
+            cart.AddItem(ProductHelper.Get(Constants.B), 1);
+            var totalPrice = cart.CartTotalPrice();
             Assert.AreEqual(80, totalPrice);
             Assert.AreEqual(2, cart.TotalProducts);
         }
@@ -112,8 +112,8 @@ namespace ECommerce.Tests
         public void Cart_1Item_Test()
         {
             var cart = new Cart();
-            cart.AddItem(ProductHelper.Get(Constants.A), 1);            
-            var totalPrice = cart.CalculateTotal();
+            cart.AddItem(ProductHelper.Get(Constants.A), 1);
+            var totalPrice = cart.CartTotalPrice();
             Assert.AreEqual(50, totalPrice);
             Assert.AreEqual(1, cart.TotalProducts);
         }
@@ -123,7 +123,7 @@ namespace ECommerce.Tests
         {
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 2);
-            var totalPrice = cart.CalculateTotal();
+            var totalPrice = cart.CartTotalPrice();
             Assert.AreEqual(100, totalPrice);
             Assert.AreEqual(1, cart.TotalProducts);
         }
@@ -134,7 +134,7 @@ namespace ECommerce.Tests
             var cart = new Cart();
             cart.AddItem(ProductHelper.Get(Constants.A), 2);
             cart.AddItem(ProductHelper.Get(Constants.B), 2);
-            var totalPrice = cart.CalculateTotal();
+            var totalPrice = cart.CartTotalPrice();
             Assert.AreEqual(160, totalPrice);
             Assert.AreEqual(2, cart.TotalProducts);
         }
@@ -147,17 +147,15 @@ namespace ECommerce.Tests
 
             var rules = new List<IPromotionRule>
             {
-                new IndividualPromotionProcessor()                
+                new IndividualPromotionProcessor()
             };
 
-            var totalPrice = cart.CalculateTotal();
+            var totalPrice = cart.CartTotalPrice();
             Assert.AreEqual(250, totalPrice);
             Assert.AreEqual(1, cart.TotalProducts);
 
-            cart.Checkout(new PromotionProcessor(rules));
-
-
-
+            var discountedPrice = cart.Checkout(new PromotionProcessor(rules));
+            Assert.AreEqual(230, discountedPrice);
         }
     }
 }

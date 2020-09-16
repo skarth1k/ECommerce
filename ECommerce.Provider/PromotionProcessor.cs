@@ -11,7 +11,7 @@ namespace ECommerce.Provider
             this.promotionRules = promotionRules;
         }
 
-        public void ApplyPromotions(Context context)
+        public decimal ApplyPromotions(Context context)
         {
             if (!context.IsPromotionApplied)
             {
@@ -19,10 +19,12 @@ namespace ECommerce.Provider
                 {
                     if (rule.IsApplicable(context))
                     {
-                        rule.ApplyPromotions(context);
+                        return rule.ApplyPromotions(context);
                     }
                 }
             }
+
+            return 0.0m;
         }
     }
 }

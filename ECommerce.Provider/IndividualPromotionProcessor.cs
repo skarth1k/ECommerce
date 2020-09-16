@@ -48,6 +48,18 @@ namespace ECommerce.Provider
         public decimal ApplyPromotions(Context context)
         {
 
+            var cartItem = context.CartItems[0];
+            var promotionalProduct = individualPromotions.FirstOrDefault(ip => ip.Product == cartItem.Item);
+            if (promotionalProduct != null)
+            {
+                var quantity = cartItem.Quantity;
+
+                var discountPrice = cartItem.Quantity / promotionalProduct.Quantity;
+                var normalPricing = cartItem.Quantity % promotionalProduct.Quantity;
+
+                return (discountPrice * promotionalProduct.Price) + (normalPricing * cartItem.Item.Price);
+            }
+
             return 0.0m;
         }
 
@@ -76,7 +88,7 @@ namespace ECommerce.Provider
             {
                 bool isValidPromotion = GetIsValidPromotion(individualPromo);
 
-                if(!isValidPromotion)
+                if (!isValidPromotion)
                 {
                     individualPromotions.Remove(individualPromo);
                 }
