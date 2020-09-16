@@ -1,5 +1,7 @@
 ﻿using ECommerce.Contracts;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ECommerce.Provider
 {
@@ -14,6 +16,6 @@ namespace ECommerce.Provider
                 Products = ProductHelper.GetProducts(Constants.C, Constants.D),
                 Type = PromotionType.Combo
             }
-        };
+        };        
     }
 }
