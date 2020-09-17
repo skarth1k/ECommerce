@@ -39,7 +39,25 @@ namespace ECommerce.Provider
 
         public decimal ApplyPromotions(Context context)
         {
-            throw new NotImplementedException();
+            decimal discountPrice = 0.0M, normalPricing = 0.0M, priceAfterDiscounts = 0.0M;
+
+            for (int i = 0; i < context.CartItems.Count; i++)
+            {
+                var cartItem = context.CartItems[i];
+                var promotionalProduct = GetPromotionalProduct(cartItem);
+
+                if (promotionalProduct != null)
+                {
+                    var cartQuantity = cartItem.Quantity;
+
+                    discountPrice = cartQuantity / promotionalProduct.Quantity;
+                    normalPricing = cartQuantity % promotionalProduct.Quantity;
+
+                    priceAfterDiscounts += (discountPrice * promotionalProduct.Price) + (normalPricing * cartItem.Item.Price);
+                }
+            }
+
+            return priceAfterDiscounts;
         }
 
         public bool IsApplicable(Context context)
@@ -60,7 +78,11 @@ namespace ECommerce.Provider
             return result == null;
         }
 
-
+        private ComboPromotion GetPromotionalProduct(ProductItem productItem)
+        {
+            //TODO: Implement the logic to find the promotional products
+            return comboPromotions[0];
+        }
 
         class ComboComparer : IComparer<ComboPromotion>
         {

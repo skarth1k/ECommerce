@@ -197,5 +197,25 @@ namespace ECommerce.Tests
             var discountedPrice = cart.Checkout(new PromotionProcessor(rules));
             Assert.AreEqual(225, discountedPrice);
         }
+
+        [Test]
+        public void Cart_ComboPromotions_2Items_Test()
+        {
+            var cart = new Cart();
+            cart.AddItem(ProductHelper.Get(Constants.C), 1);
+            cart.AddItem(ProductHelper.Get(Constants.D), 1);
+
+            var rules = new List<IPromotionRule>
+            {
+                new ComboPromotionProcessor()
+            };
+
+            var totalPrice = cart.CartTotalPrice();
+            Assert.AreEqual(35, totalPrice);
+            Assert.AreEqual(2, cart.TotalProducts);
+
+            var discountedPrice = cart.Checkout(new PromotionProcessor(rules));
+            Assert.AreEqual(30, discountedPrice);
+        }
     }
 }
